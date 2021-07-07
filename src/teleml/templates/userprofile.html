@@ -1,0 +1,158 @@
+{% extends 'base.html' %}
+
+{% block title %}Profile{% endblock %}
+
+{% block content %} 
+
+    <div class="container rounded bg-white mt-5 mb-5">
+
+        {% if user == request.user %}
+            <form enctype="multipart/form-data" method="POST" action="" class="">
+
+                {% csrf_token %}
+
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                            <div class="image-upload">
+                                <!-- <input id="file-input" type="file" onchange="readURL(this);"> -->
+                                {{ userprofile_form.avatar }}
+
+                                <label for="file-input">
+                                    <!-- <img id="blah" src="modul.jpg" alt="your image" width="130" height="150" /> -->
+                                    <img class="rounded-circle mt-5"  id="blah" src="{{ user.profile.avatar.url }}" width="130" height="130">
+                                </label>
+                                
+                            </div>
+
+                            
+
+                            <span class="font-weight-bold">{{user.first_name}}</span>
+                            <span class="text-black-50">{{user.username}}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-5">
+                        <div class="p-3 py-5">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h6 class="text-right">Edit your profile</h6>
+                            </div>
+                            
+                            <div class="row mt-2">
+                        
+                                <div class="col-md-12 mt-3">
+                                    <!-- <input type="text" class="form-control" placeholder="Your name" aria-describedby="nameHelp" value="{{user.first_name}}"> -->
+                                    {{ user_form.first_name }}
+                                    <small id="nameHelp" class="form-text text-muted">Name</small>
+                                </div> 
+                                <div class="col-md-12 mt-3">
+                                    <!-- <input type="text" class="form-control" placeholder="Your email(to contact)" aria-describedby="emailHelp" value="{{user.email}}"> -->
+                                    {{ user_form.email }}
+                                    <small id="emailHelp" class="form-text text-muted">email</small>
+                                </div>
+                                <div class="col-md-12 mt-3">
+                                    <!-- <input type="text" class="form-control" placeholder="Your website" aria-describedby="siteHelp" value="{{user.profile.website}}"> -->
+                                    {{ userprofile_form.website }}
+                                    <small id="siteHelp" class="form-text text-muted">Website (optional)</small>
+                                </div>
+                            </div>
+                            <div class="mt-5 text-center">
+                                <button class="btn btn-primary profile-button" type="submit">SAVE</button>
+                            </div>
+                        
+                        </div>
+                    </div>
+                    
+                </div>
+            </form>
+
+            <div class="row justify-content-between">
+                <div class="col-6">
+                    <h3>
+                        My models
+                    </h3>
+                </div>
+                
+                
+                <div class="col-6">
+                    <div class="text-right">
+                        <a href="{% url 'upload_model' %}" class="btn btn-primary profile-button" type="button">UPLOAD MODEL</a>
+                    </div>
+                        
+                </div>
+            </div>
+
+        {% else %}
+            <div class="row justify-content-between">
+                <div class="col-6">
+                    <h3>
+                        {{user.username}} models
+                    </h3>
+                </div>
+                
+            </div>
+        {% endif %}
+
+        
+        
+        
+        <hr>
+
+        <div class="row my-2 mx-4 text-center">
+
+            {% for model in models %}
+                <div class="col-md-2 mr-5 my-2">
+                    <div class="card" style="width: 12rem;">
+                        <img class="card-img-top" src="{{model.logo.url}}" alt="Card image cap" height="180" width="100">
+                        <div class="card-body">
+                        <h6 class="card-title text-truncate"><a href="{% url 'model_description' model.id %}">{{model.title}}</a></h6>
+                        </div>
+                    </div>
+                    
+                </div>
+            {% endfor %}
+            
+        </div>
+    </div>
+
+    <style>
+        .image-upload>input {
+            display: none;
+        }
+    </style>
+
+{% endblock %}
+
+
+{% block script %}
+    
+    <script>
+        document.getElementById("namefield").value = "{{user.first_name}}";
+        document.getElementById("emailfield").value = "{{user.email}}";
+        document.getElementById("sitefield").value = "{{user.profile.website}}";
+
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    console.log(e.target.result)
+                    $('#blah')
+                        .attr('src', e.target.result)
+                        .width(130)
+                        .height(130);
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+            $(document).ready(function() {
+                $('#btn-example-file-reset').on('click', function() {     
+                    $('#example-file').val('');
+                });
+            });
+        
+    </script>
+
+{% endblock %}

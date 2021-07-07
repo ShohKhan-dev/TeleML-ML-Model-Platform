@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{category.title}}{% endblock %}
+
+{% block content %} 
+    <div class="container mt-4">
+
+        <div>
+
+            <div class="row justify-content-between mt-5">
+                <div class="col-8">
+                    <h5>{{category.title}}</h5>
+                </div>
+            </div>
+
+            <div class="row my-2 mx-4 text-center">
+                {% for model in page_obj %}
+                    <div class="col-md-2 mr-5 my-2">
+                        <div class="card" style="width: 12rem;">
+                            <img class="card-img-top" src="{{model.logo.url}}" alt="Card image cap" height="180" width="100">
+                            <div class="card-body">
+                                <h6 class="card-title text-truncate"><a href="{% url 'model_description' model.id %}">{{model.title}}</a></h6>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>  
+
+        <div class="pagination">
+            <span class="step-links">
+                {% if page_obj.has_previous %}
+                    <a class="btn btn-primary profile-button" href="?page=1">&laquo; First</a>
+                    <a class="btn btn-primary profile-button" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                {% endif %}
+        
+                <span class="current">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                </span>
+        
+                {% if page_obj.has_next %}
+                    <a class="btn btn-primary profile-button" href="?page={{ page_obj.next_page_number }}">Next</a>
+                    <a class="btn btn-primary profile-button" href="?page={{ page_obj.paginator.num_pages }}">Last &raquo;</a>
+                {% endif %}
+            </span>
+        </div>
+        
+        <!-- <div>
+            <div class="row justify-content-end my-4">
+                <div class="col-2 mx-4">
+                    <button class="btn btn-primary profile-button" type="button">PREVIOUS</button>
+                </div>
+                <div class="col-2 mx-4">
+                    <button class="btn btn-primary profile-button" type="button">NEXT</button>
+                </div>
+                
+            </div>
+        </div> -->
+    </div>
+{% endblock %}

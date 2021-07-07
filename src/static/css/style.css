@@ -1,0 +1,21 @@
+.not-visible {
+    display: none;
+}
+
+.results-card {
+    position: absolute;
+    background-color: white;
+    width: 42%;
+    margin-top: 5px;
+    box-shadow: 0 5px 5px 0 black;
+    transition: 0.5s;
+    border-radius: 7px;
+    padding: 15px 15px;
+}
+
+.model-logo{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+

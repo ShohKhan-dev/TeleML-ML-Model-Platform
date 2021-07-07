@@ -1,0 +1,164 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Upload Model{% endblock %}
+
+{% block content %} 
+
+
+    <div class="container rounded bg-white mt-5 mb-5">
+        <form  enctype="multipart/form-data" method="POST" class="" >
+            {% csrf_token %}
+
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+
+                        <div class="image-upload">
+                            <!-- <input id="file-input" type="file" onchange="readURL(this);"> -->
+                            {{ form.logo }}
+
+                            <label for="file-input">
+                                <!-- <img id="blah" src="modul.jpg" alt="your image" width="130" height="150" /> -->
+                                <img class="mt-2"  id="blah" src="{% static 'img/upload.png' %}" alt="upload logo" height="180" width="180">
+                            </label>
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="p-3 pt-5">
+
+                            <div class="row mt-2">
+                                <div class="col-md-12 mt-4">
+                                    <!-- <input type="text" class="form-control" placeholder="headline" aria-describedby="nameHelp" value="Sentimento"> -->
+                                    {{ form.title }}
+                                    <small id="nameHelp" class="form-text text-muted">{{ form.title.label }}</small>
+                                </div> 
+                                <div class="col-md-12 mt-4">
+                                    <!-- <input type="text" class="form-control" placeholder="headline" aria-describedby="emailHelp" value="1.0"> -->
+                                    {{ form.version }}
+                                    <small id="emailHelp" class="form-text text-muted">{{ form.version.label }}</small>
+
+                                </div>
+                                <div class="col-md-12 mt-4">
+                                    <!-- <input type="text" class="form-control" placeholder="headline" aria-describedby="siteHelp" value="5.6"> -->
+                                    {{ form.require_version }}
+                                    <small id="siteHelp" class="form-text text-muted">{{ form.require_version.label }}</small>
+                                </div>
+                            </div>
+
+                            <!-- <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="button">SAVE</button></div> -->
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="p-3 pt-5">
+
+                        <div class="row mt-2">
+                            <div class="col-md-12 mt-4">
+                                {{ form.category }}
+                                <small id="nameHelp" class="form-text text-muted">{{ form.category.label }}</small>
+                            </div> 
+                            <div class="col-md-12 mt-4">
+                                <!-- <textarea type="text" class="form-control" rows="5" placeholder="Some description" aria-describedby="emailHelp" value="steve@gmail.com"></textarea> -->
+                                {{ form.description }}
+                                <small id="emailHelp" class="form-text text-muted">{{ form.description.label }}</small>
+                            </div>
+                        </div>
+                    
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-3 p-3"></div>
+
+                
+                
+                
+                
+                
+            
+
+                <div class="col-md-8">
+                    <h4>Model</h4>
+                
+
+                    <label>File</label><br>
+                    <input id="example-file" type="file">
+
+                    <button id="btn-example-file-reset" type="button">Reset file</button>
+
+                </div>
+
+                
+
+                
+
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="col-md-4">
+                    {% if form.errors %}
+                        <div class="alert alert-danger" role="alert">
+                            {% for error in form.errors.values %}
+                                {{error}} 
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+
+            <div class="row justify-content-between">
+
+                
+                <div class="col-md-12 my-4">
+                    <div class="field">
+                        <div class="control">
+                            <div class="text-center"><button class="btn btn-primary profile-button" type="submit">SAVE</button></div>
+
+                        </div> 
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+    <style>
+        .image-upload>input {
+            display: none;
+        }
+    </style>
+
+{% endblock %}
+
+{% block script %}
+    <script>
+        function readURL(input) {
+		if (input.files && input.files[0]) {
+			var reader = new FileReader();
+
+			reader.onload = function (e) {
+				$('#blah')
+					.attr('src', e.target.result)
+					.width(180)
+					.height(180);
+			};
+
+			reader.readAsDataURL(input.files[0]);
+           }
+       }
+
+        $(document).ready(function() {
+            $('#btn-example-file-reset').on('click', function() {     
+                $('#example-file').val('');
+            });
+        });
+
+    </script>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'base.html' %} 
+
+{% block title %} {% endblock %}
+
+{% block content %}
+    <div class="container mt-4">
+
+        {% for category in categories %}
+            <div>
+                <div class="row justify-content-between mt-5">
+                    <div class="col-6">
+                        <h5>{{category.title}}</h5>
+                    </div>
+                    <div class="col-4 text-right">
+                        <a href="{% url 'category_item' category.id %}" class="btn btn-primary profile-button" type="button">SEE MORE</a>
+                    </div>
+                </div>
+    
+                <div class="row my-2 mx-4 text-center">
+    
+                    {% for model in category.items.all|slice:":4" %}
+                        <div class="col-md-2 mr-5 my-2">
+                            <div class="card" style="width: 12rem;">
+                                <img class="card-img-top" src="{{ model.logo.url }}" alt="Card image cap" height="180" width="100">
+                                <div class="card-body">
+                                    <h6 class="card-title text-truncate"><a href="{% url 'model_description' model.id %}">{{model.title}}</a></h6>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+        
+    </div>
+
+{% endblock %}
+
+
