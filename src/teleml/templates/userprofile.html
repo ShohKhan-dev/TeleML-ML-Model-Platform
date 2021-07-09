@@ -127,9 +127,6 @@
 {% block script %}
     
     <script>
-        document.getElementById("namefield").value = "{{user.first_name}}";
-        document.getElementById("emailfield").value = "{{user.email}}";
-        document.getElementById("sitefield").value = "{{user.profile.website}}";
 
         function readURL(input) {
             if (input.files && input.files[0]) {

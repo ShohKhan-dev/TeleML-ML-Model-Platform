@@ -22,13 +22,17 @@ const sendSearchData = (game) => {
             if (Array.isArray(data)){
                 resultsBox.innerHTML = ""
                 data.forEach(model=> {
-                    resultsBox.innerHTML += `<a href="/${'model'}/${model.pk}" class="item">
-                                                <div class="row mt-2 mb-2 class="align-middle">
+                    resultsBox.innerHTML += `<a href="/${'model'}/${model.pk}">
+                                                <div class="row mt-2 mb-2">
+                                                
+
                                                     <div class="col-2">
                                                         <img src="${model.logo}" alt="model logo" class="model-logo">
                                                     </div>
-                                                    <div class="col-10>
-                                                        <h5>${model.title}</h5>
+
+                                                    <div class="col-10">
+													<h5>${model.title}</h5>
+                                                        
                                                     </div>
                                                 </div>
                                             </a>`

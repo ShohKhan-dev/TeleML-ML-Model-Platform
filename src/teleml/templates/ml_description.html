@@ -23,7 +23,13 @@
 
                             <div class="col-md-12">
                                 <p><a href="{% url 'category_item' model.category.id %}">{{model.category}}</a></p>
-                            </div> 
+                            </div>  
+
+                            {% if request.user == model.created_by %}
+                                <div class="col-md-12">
+                                    <a href="{% url 'model_edit' model.id %}" class="btn btn-primary profile-button">Edit</a>
+                                </div> 
+                            {% endif %}
                 
                         </div>
 

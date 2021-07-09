@@ -1,0 +1,23 @@
+1 -- adb tcpip 5555
+
+2 -- adb connect IP ADDRESS HERE     ==== to connect device
+
+3 -- adb devices ======       to know connected devices
+
+4 -- adb shell pm list packages ===== to know apps in device
+
+5 -- adb shell pm path com.android.chrome  === to know path to application
+
+
+
+
+PhoneSpoilt:
+
+1 -- 9
+
+   1 -- /mnt/sdcard/Books       or 1 -- /mnt/sdcard/DCIM    ;)
+     
+      1 -- C:\Users\User\Desktop\Shots    first move this file to desktop
+       
+
+

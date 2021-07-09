@@ -18,6 +18,8 @@ urlpatterns = [
     #path('profile/update/',  UpdateProfile.as_view(), name='update_profile'),
     path('upload/', upload_model, name='upload_model'),
 
+    path('model/edit/<int:pk>/', model_edit, name='model_edit'),
+
     path('model/<int:pk>/', model_description, name='model_description'),
 
     path('category/<int:pk>/', category_item, name='category_item'),

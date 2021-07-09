@@ -31,7 +31,6 @@ def register(request):
             login(request, user)
             return redirect('home')
             # return redirect('profile', username = user.username)
-
     else:
         form = CreateUserForm()
 
@@ -94,6 +93,29 @@ def upload_model(request):
 
     return render(request, 'upload_model.html', context)
 
+@login_required
+def model_edit(request, pk):
+
+    model_ed = get_object_or_404(TeleModel, id=pk)
+
+    if request.method == "POST":
+        form = ModelUploadForm(request.POST, request.FILES, instance=model_ed)
+        if form.is_valid():
+            model = form.save(commit=False)
+            model.created_by = request.user
+            model.save()
+
+            return redirect('model_description', pk=model.id)
+        else:
+            for error in form.errors.values():
+                print(error)
+    else:
+        form = ModelUploadForm(instance=model_ed)
+
+    context = {'form': form, 'model': model_ed}
+
+    return render(request, 'edit_model.html', context)
+
 
 def model_description(request, pk):
 
@@ -109,8 +131,6 @@ def category_item(request, pk):
     category = get_object_or_404(Category, id=pk)
 
     models = TeleModel.objects.filter(category=category).all()
-
-    
 
     paginator = Paginator(models, 8) # Show 25 contacts per page.
 

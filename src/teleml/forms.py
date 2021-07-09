@@ -46,17 +46,18 @@ class ModelUploadForm(forms.ModelForm):
     categories = Category.objects.all()
 
     
-    title = forms.CharField(min_length=5,  max_length=255, label=("Title"), widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Title'}))
-    description = forms.CharField(min_length=5 ,label=("Description"), widget=forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Some description', 'rows': '5'}))
-    category = forms.ModelChoiceField(label=('Category'), queryset=categories, widget=forms.Select(attrs={'class': 'form-control'}))
+    title = forms.CharField(min_length=5,  max_length=255, label=("Title"), widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Title', 'id':'title'}))
+    description = forms.CharField(min_length=5 ,label=("Description"), widget=forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Some description', 'id':'descriptionfield', 'rows': '5'}))
+    category = forms.ModelChoiceField(label=('Category'), queryset=categories, widget=forms.Select(attrs={'class': 'form-control', 'id':'category'}))
     #category = forms.ChoiceField(choices=choice_list, label=("Category"), widget=forms.Select(attrs={'class': 'form-control'}))
-    version = forms.FloatField(label=("Version"), widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Version'}))
-    require_version = forms.FloatField(label=("Requires Telegram version"), widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Telegram version'}))
-    logo = forms.ImageField(widget=forms.FileInput(attrs={'id': 'file-input', 'onchange': "readURL(this)"}))
+    version = forms.FloatField(label=("Version"), widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Version', 'id':'version'}))
+    require_version = forms.FloatField(label=("Requires Telegram version"), widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Telegram version', 'id':'require_version'}))
+    logo = forms.ImageField(widget=forms.FileInput(attrs={'id': 'logo-input', 'onchange': "readURL(this)"}))
+    file = forms.FileField(widget=forms.FileInput(attrs={'id': 'file-input'}))
     
     class Meta:
         model = TeleModel
-        fields = ('title', 'description', 'category', 'version', 'require_version', 'logo')
+        fields = ('title', 'description', 'category', 'version', 'require_version', 'logo', 'file')
 
 
     # def clean_version(self):
