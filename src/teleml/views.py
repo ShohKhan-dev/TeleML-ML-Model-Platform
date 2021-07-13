@@ -98,24 +98,31 @@ def model_edit(request, pk):
 
     model_ed = get_object_or_404(TeleModel, id=pk)
 
-    if request.method == "POST":
-        form = ModelUploadForm(request.POST, request.FILES, instance=model_ed)
-        if form.is_valid():
-            model = form.save(commit=False)
-            model.created_by = request.user
-            model.save()
+    if request.user == model_ed.created_by:
 
-            return redirect('model_description', pk=model.id)
+
+        if request.method == "POST":
+            form = ModelUploadForm(request.POST, request.FILES, instance=model_ed)
+            if form.is_valid():
+                model = form.save(commit=False)
+                model.created_by = request.user
+                model.save()
+
+                return redirect('model_description', pk=model.id)
+            else:
+                for error in form.errors.values():
+                    print(error)
         else:
-            for error in form.errors.values():
-                print(error)
-    else:
-        form = ModelUploadForm(instance=model_ed)
+            form = ModelUploadForm(instance=model_ed)
 
-    context = {'form': form, 'model': model_ed}
+        context = {'form': form, 'model': model_ed}
 
-    return render(request, 'edit_model.html', context)
+        return render(request, 'edit_model.html', context)
+        
 
+    context = {'model': model_ed}
+
+    return render(request, 'ml_description.html', context)
 
 def model_description(request, pk):
 
@@ -139,7 +146,7 @@ def category_item(request, pk):
 
     #return render(request, 'list.html', {'page_obj': page_obj})
 
-    context = {'category': category, 'page_obj': page_obj}
+    context = {'category': category, 'page_obj': page_obj, 'models': models}
 
     return render(request, 'category_item.html', context)
 
@@ -166,3 +173,20 @@ def search_results(request):
         return JsonResponse({'data': res})
 
     return JsonResponse({})
+
+
+def model_delete(request, pk):
+
+    model = get_object_or_404(TeleModel, id=pk)
+
+    if request.user == model.created_by:
+
+        model.delete()
+
+        print("TO DELETE", model.title)
+
+        return redirect('userprofile', pk=request.user.id)
+
+    context = {'model': model}
+
+    return render(request, 'ml_description.html', context)

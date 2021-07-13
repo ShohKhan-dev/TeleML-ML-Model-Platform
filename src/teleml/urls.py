@@ -22,6 +22,8 @@ urlpatterns = [
 
     path('model/<int:pk>/', model_description, name='model_description'),
 
+    path('model/delete/<int:pk>/', model_delete, name='model_delete'),
+
     path('category/<int:pk>/', category_item, name='category_item'),
 
     path('search/', search_results, name='search')

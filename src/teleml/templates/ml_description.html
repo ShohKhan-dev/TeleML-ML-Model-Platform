@@ -26,9 +26,14 @@
                             </div>  
 
                             {% if request.user == model.created_by %}
-                                <div class="col-md-12">
-                                    <a href="{% url 'model_edit' model.id %}" class="btn btn-primary profile-button">Edit</a>
-                                </div> 
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <a href="{% url 'model_edit' model.id %}" class="btn btn-primary profile-button">Edit</a>
+                                    </div> 
+                                    <div class="col-md-6">
+                                        <a href="{% url 'model_delete' model.id %}" class="btn btn-danger profile-button">Delete</a>
+                                    </div> 
+                                </div>
                             {% endif %}
                 
                         </div>
@@ -54,7 +59,7 @@
 
             <div class="col-md-10 mx-5">
                 <div class="d-flex flex-column align-items-center" style="background-color: lightgray;">
-                    <p>{{model.description}}</p>
+                    <p class="text-justify">{{model.description}}</p>
                 </div>
             </div>
             
@@ -81,7 +86,12 @@
             <div class="col-md-2 mx-5 mt-2">
                 <div class="d-flex flex-column">
                     <h6>Size</h6>
-                    <p>50 MG</p>
+                    {% if model.file %}
+                        {{ model.file.size|filesizeformat }}
+                    {% else %}
+                        <p>No file</p>
+                    {% endif %}
+
                 </div>
             </div>
 
